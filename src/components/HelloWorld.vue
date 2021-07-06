@@ -15,7 +15,7 @@
             class="mx-4"
             @click="validate"
           >
-            Search
+            {{ $vuetify.lang.t('$vuetify.search') }}
           </v-btn>
         </v-form>
       </v-col>
