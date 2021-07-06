@@ -4,7 +4,7 @@ export default {
   ...en,
 
   search: "Search",
-  noDataText: 'no data',
+  address: "address",
 
   namespace: {
     key3: "key 3 internationalization"

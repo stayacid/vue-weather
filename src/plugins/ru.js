@@ -4,7 +4,7 @@ export default {
   ...ru,
 
   search: "Искать",
-  noDataText: 'нет данных',
+  address: "адрес",
 
   namespace: {
     key3: "key 3 internationalization"
