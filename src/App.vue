@@ -40,8 +40,6 @@ export default {
     };
   },
 
-  methods: {},
-
   watch: {
     currentLang: function(newLang) {
       this.$vuetify.lang.current = newLang.abbr;
