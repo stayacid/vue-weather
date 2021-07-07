@@ -25,6 +25,49 @@
         </v-form>
       </v-col>
 
+      <v-col >
+        <v-card
+          elevation="1"
+          class="mx-auto my-12 px-2"
+          max-width="460"
+          v-if="cityWeather && cityWeather.cod === 200"
+        >
+          <v-card-title>{{ this.cityWeather.name }}</v-card-title>
+          
+          <v-card-text>
+            <v-row justify="center" class="mb-2">
+              <h3>Температура</h3>
+            </v-row>
+            <v-row justify="center">
+              <h4>Температура</h4>
+            </v-row>
+            <v-row justify="space-between">
+              <div>
+                <p class="ma-0">номинал</p>
+                <p>{{ this.cityWeather.main.temp }}</p>
+              </div>
+              <div>
+                <p class="ma-0">ощущается как</p>
+                <p>{{ this.cityWeather.main.feels_like }}</p>
+              </div>
+              <div>
+                <p class="ma-0">минимальная</p>
+                <p>{{ this.cityWeather.main.temp_min }}</p>
+              </div>
+              <div>
+                <p class="ma-0">максимальная</p>
+                <p>{{ this.cityWeather.main.temp_max }}</p>
+              </div>
+            </v-row>
+          </v-card-text>
+        </v-card>
+
+        <v-card v-if="cityWeather && cityWeather.cod === '404'">
+          <v-card-title>Город не найден</v-card-title>
+        </v-card>
+
+      </v-col>
+
       <!-- <v-col class="mb-4">
         <h1 class="display-2 font-weight-bold mb-3">
           Welcome to Vuetify
@@ -51,30 +94,29 @@
 <script>
 export default {
   name: 'HelloWorld',
+  props: {
+    lang: {
+      type: Object
+    }
+  },
 
   data: () => ({
     valid: true,
     city: '',
+    cityWeather: null,
     cityRules: [
         v => !!v || 'address is required',
         v => (v && v.length >= 3) || 'address must be more than 3 characters',
       ],
+    url: 'https://api.openweathermap.org/data/2.5/weather',
+    apiKey: '84e2a9ad0b2bca1922b23252454cc8a2',
   }),
 
   methods: {
-    send() {
-      this.validate();
-      fetch("https://swapi.co/api/people/")
-        .then(response => response.json())
-        .then(res => {
-          if (this.search) {
-            this.people = res.results.filter(people =>
-              people.name.toLowerCase().includes(this.search.toLowerCase())
-            );
-          } else {
-            this.people = res.results;
-          }
-        });
+    async send() {
+      let response = await fetch(`${this.url}?q=${this.city}&appid=${this.apiKey}&lang=${this.lang.abbr}&units=metric`);
+      let result = await response.json();
+      this.cityWeather = result;
     },
     validate() {
       this.$refs.form.validate();

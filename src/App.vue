@@ -15,7 +15,7 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld />
+      <HelloWorld :lang="currentLang" />
     </v-main>
   </v-app>
 </template>
