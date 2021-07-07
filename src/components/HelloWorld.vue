@@ -30,7 +30,7 @@
           <v-btn
             v-for="city in prevCities"
             :key="city.name"
-            @click="send(null, city.name)"
+            @click="fillName(city.name)"
           >
             {{ city.name }}
           </v-btn>
@@ -120,6 +120,9 @@ export default {
     resetValidation() {
       this.$refs.form.resetValidation();
     },
+    fillName(city) {
+      this.city = city;
+    }
   },
 
   computed: {
