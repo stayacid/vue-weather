@@ -29,7 +29,7 @@
         <v-card-actions v-if="prevCities.length">
           <v-btn
             v-for="city in prevCities"
-            :key="city.name"
+            :key="city.id"
             @click="fillName(city.name)"
           >
             {{ city.name }}
@@ -122,14 +122,6 @@ export default {
     },
     fillName(city) {
       this.city = city;
-    }
-  },
-
-  computed: {
-    err() {
-      if (this.cityWeather) {
-        return this.cityWeather.cod === '404';
-      }
     },
   },
 
@@ -139,7 +131,7 @@ export default {
         val.cod === 200 &&
         !this.prevCities.some((city) => city.id === val.id)
       ) {
-        this.prevCities.push(val);
+        this.prevCities.push({ name: val.name, id: val.id });
         sessionStorage.setItem('prevCities', JSON.stringify(this.prevCities));
       } else if (val.cod === '404') {
         this.cityRules.push(() => 'No city was found'); // не нашёл в доках способ триггерить ошибку, поэтому такой костыль
